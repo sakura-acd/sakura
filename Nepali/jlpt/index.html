@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JLPT — Sakura</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans:['Outfit','sans-serif'], jp:['"Noto Sans JP"','sans-serif'] },
+          colors: {
+            blue:   { DEFAULT:'#7eb8e4', deep:'#3a7cbf' },
+            teal:   { DEFAULT:'#6ecec8', deep:'#2a9d8f' },
+            mint:   { DEFAULT:'#80d4a8', deep:'#27ae72' },
+            coral:  { DEFAULT:'#f4a57a', deep:'#e0693a' },
+            butter: { DEFAULT:'#f5da8a', deep:'#d4a017' },
+            lilac:  { DEFAULT:'#c4a8e0', deep:'#8b5cf6' },
+            ink:    { DEFAULT:'#1f2937', 2:'#475569', muted:'#94a3b8' },
+            bg:     { DEFAULT:'#f5f8fc', surface:'#ffffff', s2:'#eef2f7' },
+          },
+          borderRadius: { xl2:'1.25rem', xl3:'1.75rem', xl4:'2.25rem' },
+          boxShadow: {
+            card: '0 2px 16px rgba(15,23,42,.07)',
+            md2:  '0 4px 24px rgba(15,23,42,.12)',
+            lg2:  '0 8px 40px rgba(15,23,42,.16)',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family:'Outfit',sans-serif; transition:background .3s,color .3s; }
+    .jp  { font-family:'"Noto Sans JP"',sans-serif; }
+
+    .mesh-light {
+      background: radial-gradient(ellipse at 18% 12%,#d8edf8 0%,transparent 52%),
+                  radial-gradient(ellipse at 82% 88%,#d2f1ec 0%,transparent 52%),
+                  radial-gradient(ellipse at 58% 32%,#e6e2f6 0%,transparent 38%),
+                  #f4f7fb;
+    }
+    .mesh-dark {
+      background: radial-gradient(ellipse at 18% 12%,#0f2236 0%,transparent 52%),
+                  radial-gradient(ellipse at 82% 88%,#0b2120 0%,transparent 52%),
+                  #0c1220;
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+    .fu  { animation:fadeUp .5s ease both; }
+    .d1  { animation-delay:.07s; } .d2 { animation-delay:.14s; }
+    .d3  { animation-delay:.21s; } .d4 { animation-delay:.28s; }
+    .d5  { animation-delay:.35s; } .d6 { animation-delay:.42s; }
+
+    .card-lift { transition:transform .18s ease,box-shadow .18s ease; }
+    .card-lift:hover { transform:translateY(-3px); box-shadow:0 10px 32px rgba(15,23,42,.13); }
+
+    .ring-track { stroke:#e2e8f0; }
+    .ring-fill  { stroke:#3a7cbf; stroke-linecap:round;
+                  transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1); }
+
+    .s-act { background:#eef5fc; color:#3a7cbf; font-weight:600; }
+
+    .drop { transition:opacity .15s ease,transform .15s ease; }
+    .drop.closed { opacity:0; transform:translateY(-6px); pointer-events:none; }
+    .drop.open   { opacity:1; transform:translateY(0);    pointer-events:all; }
+
+    /* Level button active state */
+    .level-btn { transition:all .2s ease; }
+    .level-btn.active { transform:translateY(-2px); }
+
+    /* Dark mode */
+    body.dark #sidebar-el { background:rgba(14,19,32,.96) !important; border-color:#1d2740 !important; }
+    body.dark #topbar,
+    body.dark #botnav { background:rgba(12,18,32,.68) !important; border-color:rgba(255,255,255,.08) !important; }
+    body.dark .surface  { background:#151d2e !important; border-color:#1d2740 !important; }
+    body.dark .surface2 { background:#1d2740 !important; }
+    body.dark .t-ink    { color:#e8eef6 !important; }
+    body.dark .t-ink2   { color:#8da4c0 !important; }
+    body.dark .t-muted  { color:#4a607a !important; }
+    body.dark .divider  { border-color:#1d2740 !important; }
+    body.dark .ring-track { stroke:#1d2740; }
+    body.dark #desk-lang-drop { background:#151d2e !important; border-color:#1d2740 !important; }
+    body.dark #desk-lang-drop button { color:#8da4c0 !important; }
+    body.dark #lang-drop { background:#151d2e !important; border-color:#1d2740 !important; }
+    body.dark #lang-drop button { color:#8da4c0 !important; }
+
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-thumb { background:#c2d3e3; border-radius:99px; }
+  </style>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#e8799a"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="Sakura"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VK64G24LYX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VK64G24LYX');
+  </script>
+</head>
+
+<body class="mesh-light min-h-screen text-ink" id="body">
+
+<!-- ═══════════ DESKTOP SIDEBAR ═══════════ -->
+<aside id="sidebar-el" class="hidden lg:flex flex-col fixed top-0 left-0 h-full w-60 bg-bg-surface surface border-r border-slate-100 divider z-30 shadow-card">
+
+  <!-- Logo + lang -->
+  <div class="px-4 py-4 flex items-center gap-3 border-b border-slate-100 divider">
+    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue to-teal flex items-center justify-center shadow-md flex-shrink-0">
+      <span class="jp text-white font-bold text-base">識</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="font-bold text-base tracking-tight t-ink leading-tight">Shikaku</div>
+      <div class="text-xs t-muted">日本語 Learning</div>
+    </div>
+  </div>
+
+  <div class="px-4 py-3 border-b border-slate-100 divider">
+    <a href="../index.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all hover:bg-bg-s2 group" style="background:rgba(58,124,191,.06);">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue to-teal flex items-center justify-center flex-shrink-0 shadow-sm">
+        <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.3" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg>
+      </div>
+      <div>
+        <div class="font-bold text-sm t-ink leading-tight">Home</div>
+        <div class="text-[10px] t-muted">Back to Dashboard</div>
+      </div>
+      <svg class="w-4 h-4 t-muted ml-auto group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+    <a href="../index.html"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg>Dashboard
+    </a>
+    <a href="../learn.html"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Learn
+    </a>
+    <a href="../study.html"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 4v16M2 12h6"/></svg>Study
+    </a>
+    <a href="../quiz/index.html"   class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>Quiz
+    </a>
+    <a href="index.html" class="s-act flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>JLPT
+    </a>
+    <div class="pt-4 pb-1 px-3 text-[10px] font-bold tracking-widest t-muted uppercase">JLPT Levels</div>
+    <a href="#n5"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-blue/20 text-blue-deep font-bold text-[10px] flex items-center justify-center">N5</span> JLPT N5</a>
+    <a href="#n4" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-teal/20 text-teal-deep font-bold text-[10px] flex items-center justify-center">N4</span> JLPT N4</a>
+    <a href="#n3" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-mint/20 text-mint-deep font-bold text-[10px] flex items-center justify-center">N3</span> JLPT N3</a>
+    <a href="#n2" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-butter/20 text-butter-deep font-bold text-[10px] flex items-center justify-center">N2</span> JLPT N2</a>
+    <a href="#n1" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-coral/20 text-coral-deep font-bold text-[10px] flex items-center justify-center">N1</span> JLPT N1</a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="px-4 py-4 border-t border-slate-100 divider flex items-center justify-between">
+    <button onclick="toggleDark()" class="flex items-center gap-2 text-xs t-muted hover:text-ink transition-colors">
+      <svg id="desk-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <span id="desk-lbl">Dark mode</span>
+    </button>
+  </div>
+</aside>
+
+
+<!-- ═══════════ MOBILE TOPBAR ═══════════ -->
+<header id="topbar" class="lg:hidden fixed top-0 left-0 right-0 z-40 px-4 py-2.5 flex items-center transition-transform duration-300"
+        style="background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:0.5px solid rgba(0,0,0,.08);">
+  <a href="../index.html" class="flex-shrink-0 mr-2 t-ink2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+  </a>
+  <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none select-none">
+    <span class="text-lg">📝</span>
+    <span class="font-extrabold text-base t-ink tracking-tight">JLPT</span>
+  </div>
+  <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+    <button onclick="toggleDark()" class="w-8 h-8 rounded-lg bg-bg-s2 border border-slate-200 flex items-center justify-center t-muted hover:text-blue-deep hover:border-blue/50 transition-all">
+      <svg id="mob-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<main class="lg:ml-60 min-h-screen pb-28 lg:pb-10 pt-14 lg:pt-0">
+
+  <!-- Hero -->
+  <section class="px-5 lg:px-8 pt-5 lg:pt-8 fu">
+    <div class="relative overflow-hidden rounded-xl4 px-6 py-7 lg:py-9 shadow-card border border-slate-100 divider"
+         style="background:linear-gradient(135deg,rgba(126,184,228,.16),rgba(196,168,224,.10));">
+      <div class="relative z-10 max-w-[60%] lg:max-w-[46%]">
+        <div class="hidden lg:block text-[11px] font-extrabold tracking-widest uppercase text-blue-deep mb-2">Japanese Language Proficiency Test</div>
+        <h1 class="text-2xl lg:text-4xl font-extrabold t-ink leading-tight tracking-tight">JLPT Levels</h1>
+        <p class="mt-1.5 text-xs lg:text-sm t-ink2 leading-relaxed">Pick a level to study vocabulary, grammar, kanji and more.</p>
+      </div>
+      <div class="absolute top-3 right-3 lg:top-6 lg:right-10 text-6xl lg:text-8xl opacity-90 select-none">📝</div>
+    </div>
+  </section>
+
+  <!-- Your Progress -->
+  <section class="px-5 lg:px-8 mt-5 lg:mt-6 fu d1">
+    <div class="bg-bg-surface surface rounded-xl4 shadow-card border border-slate-100 divider p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-sm font-bold t-ink">Your Progress</h3>
+        <a href="#" class="text-xs font-bold text-blue-deep">See Details</a>
+      </div>
+
+      <div class="flex items-center gap-5 mb-6">
+        <div class="relative w-28 h-28 flex-shrink-0">
+          <svg class="w-28 h-28 -rotate-90" viewBox="0 0 112 112">
+            <circle class="ring-track" cx="56" cy="56" r="48" fill="none" stroke-width="10"/>
+            <circle class="ring-fill" cx="56" cy="56" r="48" fill="none" stroke-width="10"
+              stroke-dasharray="301.6" stroke-dashoffset="135.7"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="text-2xl font-extrabold t-ink leading-none">55%</span>
+            <span class="text-[10px] t-muted font-semibold mt-1">Completed</span>
+          </div>
+        </div>
+
+        <div class="flex-1 space-y-3.5">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0" style="background:#27ae72;">✓</div>
+            <div><div class="font-extrabold text-base t-ink leading-tight">44</div><div class="text-[11px] t-muted">Lessons Completed</div></div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0" style="background:#d4a017;">★</div>
+            <div><div class="font-extrabold text-base t-ink leading-tight">132 / 240</div><div class="text-[11px] t-muted">Points</div></div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0" style="background:#e0693a;">🔥</div>
+            <div><div class="font-extrabold text-base t-ink leading-tight">12</div><div class="text-[11px] t-muted">Day Streak</div></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="w-full flex items-center justify-center gap-2 rounded-xl2 py-3.5 text-white text-sm font-bold shadow-md2 bg-gradient-to-br from-blue to-blue-deep hover:brightness-105 transition-all mb-5">
+        Continue Learning
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+
+      <div class="space-y-1.5">
+        <div class="flex justify-between text-xs">
+          <span class="font-semibold t-ink2">Lesson 14: 〜ています</span>
+          <span class="font-extrabold t-ink">73%</span>
+        </div>
+        <div class="h-1.5 rounded-full overflow-hidden" style="background:#eef2f7;">
+          <div class="h-full rounded-full" style="width:73%;background:linear-gradient(90deg,#7eb8e4,#3a7cbf);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Level Selector (large buttons) -->
+  <div class="px-5 lg:px-8 mt-4 fu">
+    <h2 class="text-sm font-bold t-ink mb-3">Choose Your Level</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <button onclick="showLevel('n5')" data-level-btn="n5" class="level-btn active card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 transition-all bg-bg-surface surface" style="border-color:#3a7cbf;background:#eef5fc;">
+        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#7eb8e4,#3a7cbf);">N5</span>
+        <span class="text-sm font-bold t-ink">Beginner</span>
+      </button>
+      <button onclick="showLevel('n4')" data-level-btn="n4" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
+        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#6ecec8,#2a9d8f);">N4</span>
+        <span class="text-sm font-bold t-ink2">Elementary</span>
+      </button>
+      <button onclick="showLevel('n3')" data-level-btn="n3" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
+        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#80d4a8,#27ae72);">N3</span>
+        <span class="text-sm font-bold t-ink2">Intermediate</span>
+      </button>
+      <button onclick="showLevel('n2')" data-level-btn="n2" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
+        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#f5da8a,#d4a017);">N2</span>
+        <span class="text-sm font-bold t-ink2">Upper-Int</span>
+      </button>
+      <button onclick="showLevel('n1')" data-level-btn="n1" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
+        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#f4a57a,#e0693a);">N1</span>
+        <span class="text-sm font-bold t-ink2">Advanced</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ N5 ══ -->
+  <section id="n5" data-level-panel="n5" class="px-5 lg:px-8 mt-5 fu d1" style="--accent:#3a7cbf;--tint:rgba(58,124,191,.08);--tintB:rgba(58,124,191,.3);">
+    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
+      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#7eb8e4,#3a7cbf);">N5</span>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-base font-extrabold t-ink">JLPT N5 <span class="text-sm font-medium t-muted">— Beginner</span></h2>
+        <p class="text-xs t-muted mt-0.5">80+ Kanji · 800+ Words</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <a href="../vocab/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
+        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
+        <span class="text-[10px] t-muted -mt-1">800+ Words</span>
+      </a>
+      <a href="../grammar/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
+        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
+        <span class="text-[10px] t-muted -mt-1">95+ Patterns</span>
+      </a>
+      <a href="../kanji/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
+        <span class="text-[10px] t-muted -mt-1">80+ Kanji</span>
+      </a>
+      <a href="../readwrite/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
+        <span class="text-[10px] t-muted -mt-1">Combined</span>
+      </a>
+    </div>
+    <div class="mt-3 flex gap-2">
+      <a href="../quiz/n5/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
+        Start Quiz
+      </a>
+      <a href="../readwrite/n5/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Read & Write Test
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ N4 ══ -->
+  <section id="n4" data-level-panel="n4" class="px-5 lg:px-8 mt-5 fu d2" style="display:none;--accent:#2a9d8f;--tint:rgba(42,157,143,.08);--tintB:rgba(42,157,143,.3);">
+    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
+      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#6ecec8,#2a9d8f);">N4</span>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-base font-extrabold t-ink">JLPT N4 <span class="text-sm font-medium t-muted">— Elementary</span></h2>
+        <p class="text-xs t-muted mt-0.5">166+ Kanji · 1500+ Words</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <a href="../vocab/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
+        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
+        <span class="text-[10px] t-muted -mt-1">1500+ Words</span>
+      </a>
+      <a href="../grammar/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
+        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
+        <span class="text-[10px] t-muted -mt-1">150+ Patterns</span>
+      </a>
+      <a href="../kanji/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
+        <span class="text-[10px] t-muted -mt-1">166+ Kanji</span>
+      </a>
+      <a href="../readwrite/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
+        <span class="text-[10px] t-muted -mt-1">Combined</span>
+      </a>
+    </div>
+    <div class="mt-3 flex gap-2">
+      <a href="../quiz/n4/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
+        Start Quiz
+      </a>
+      <a href="../readwrite/n4/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Read & Write Test
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ N3 ══ -->
+  <section id="n3" data-level-panel="n3" class="px-5 lg:px-8 mt-5 fu d3" style="display:none;--accent:#27ae72;--tint:rgba(39,174,114,.08);--tintB:rgba(39,174,114,.3);">
+    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
+      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#80d4a8,#27ae72);">N3</span>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-base font-extrabold t-ink">JLPT N3 <span class="text-sm font-medium t-muted">— Intermediate</span></h2>
+        <p class="text-xs t-muted mt-0.5">367+ Kanji · 3750+ Words</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <a href="../vocab/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
+        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
+        <span class="text-[10px] t-muted -mt-1">3750+ Words</span>
+      </a>
+      <a href="../grammar/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
+        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
+        <span class="text-[10px] t-muted -mt-1">245+ Patterns</span>
+      </a>
+      <a href="../kanji/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
+        <span class="text-[10px] t-muted -mt-1">367+ Kanji</span>
+      </a>
+      <a href="../readwrite/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
+        <span class="text-[10px] t-muted -mt-1">Combined</span>
+      </a>
+    </div>
+    <div class="mt-3 flex gap-2">
+      <a href="../quiz/n3/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
+        Start Quiz
+      </a>
+      <a href="../readwrite/n3/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Read & Write Test
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ N2 ══ -->
+  <section id="n2" data-level-panel="n2" class="px-5 lg:px-8 mt-5 fu d4" style="display:none;--accent:#d4a017;--tint:rgba(212,160,23,.10);--tintB:rgba(212,160,23,.35);">
+    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
+      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#f5da8a,#d4a017);">N2</span>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-base font-extrabold t-ink">JLPT N2 <span class="text-sm font-medium t-muted">— Upper-Intermediate</span></h2>
+        <p class="text-xs t-muted mt-0.5">367+ Kanji · 6000+ Words</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <a href="../vocab/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
+        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
+        <span class="text-[10px] t-muted -mt-1">6000+ Words</span>
+      </a>
+      <a href="../grammar/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
+        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
+        <span class="text-[10px] t-muted -mt-1">370+ Patterns</span>
+      </a>
+      <a href="../kanji/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
+        <span class="text-[10px] t-muted -mt-1">367+ Kanji</span>
+      </a>
+      <a href="../readwrite/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
+        <span class="text-[10px] t-muted -mt-1">Combined</span>
+      </a>
+    </div>
+    <div class="mt-3 flex gap-2">
+      <a href="../quiz/n2/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
+        Start Quiz
+      </a>
+      <a href="../readwrite/n2/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Read & Write Test
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ N1 ══ -->
+  <section id="n1" data-level-panel="n1" class="px-5 lg:px-8 mt-5 fu d5" style="display:none;--accent:#e0693a;--tint:rgba(224,105,58,.09);--tintB:rgba(224,105,58,.3);">
+    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
+      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#f4a57a,#e0693a);">N1</span>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-base font-extrabold t-ink">JLPT N1 <span class="text-sm font-medium t-muted">— Advanced</span></h2>
+        <p class="text-xs t-muted mt-0.5">1000+ Kanji · 10000+ Words</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <a href="../vocab/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
+        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
+        <span class="text-[10px] t-muted -mt-1">10000+ Words</span>
+      </a>
+      <a href="../grammar/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
+        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
+        <span class="text-[10px] t-muted -mt-1">450+ Patterns</span>
+      </a>
+      <a href="../kanji/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
+        <span class="text-[10px] t-muted -mt-1">1000+ Kanji</span>
+      </a>
+      <a href="../readwrite/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
+        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
+        <span class="text-[10px] t-muted -mt-1">Combined</span>
+      </a>
+    </div>
+    <div class="mt-3 flex gap-2">
+      <a href="../quiz/n1/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
+        Start Quiz
+      </a>
+      <a href="../readwrite/n1/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Read & Write Test
+      </a>
+    </div>
+  </section>
+
+
+</main>
+
+
+
+<!-- ═══════════ MOBILE BOTTOM NAV ═══════════ -->
+<nav id="botnav" class="lg:hidden fixed bottom-3 left-3 right-3 z-40 transition-transform duration-300 rounded-full shadow-lg2"
+     style="background:rgba(255,255,255,.85);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);">
+  <div class="flex items-center" style="height:66px;">
+    <a href="../index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5 relative">
+      <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg>
+      <span class="text-[11px] font-semibold t-muted">Home</span>
+    </a>
+    <a href="../jlpt.html" class="flex-1 flex flex-col items-center justify-center gap-1.5 relative">
+      <svg width="24" height="24" fill="none" stroke="#2a9d8f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M2 4h6a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H2z"/><path d="M22 4h-6a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H22z"/></svg>
+      <span class="text-[11px] font-bold" style="color:#2a9d8f;">JLPT</span>
+      <span class="absolute -bottom-1.5 w-5 h-[3px] rounded-full" style="background:#2a9d8f;"></span>
+    </a>
+    <a href="../ssw.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+      <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m12 3 10 5.5-10 5.5L2 8.5 12 3Z"/><path d="M6 11v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5"/></svg>
+      <span class="text-[11px] font-semibold t-muted">SSW</span>
+    </a>
+    <a href="../quiz/index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+      <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M4 20h2.5L18 8.5a1.8 1.8 0 0 0-2.5-2.5L4 17.5V20Z"/></svg>
+      <span class="text-[11px] font-semibold t-muted">Quiz</span>
+    </a>
+    <a href="../other.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+      <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+      <span class="text-[11px] font-semibold t-muted">More</span>
+    </a>
+  </div>
+</nav>
+
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+let isDark = false;
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+const SUN  = '<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/><circle cx="12" cy="12" r="4"/>';
+
+function toggleDark() {
+  isDark = !isDark;
+  document.body.className = isDark
+    ? 'mesh-dark min-h-screen text-slate-100 dark'
+    : 'mesh-light min-h-screen text-ink';
+  ['mob-icon','desk-icon'].forEach(id => { const el = document.getElementById(id); if(el) el.innerHTML = isDark ? SUN : MOON; });
+  const l = document.getElementById('desk-lbl'); if(l) l.textContent = isDark ? 'Light mode' : 'Dark mode';
+}
+
+/* ── Scroll-direction nav show/hide (mobile only) ──
+   Scrolling down: bottom nav hides, top nav stays visible.
+   Scrolling up: top nav hides, bottom nav stays visible. */
+(function(){
+  let lastY = window.scrollY;
+  const topbar = document.getElementById('topbar');
+  const botnav = document.getElementById('botnav');
+  window.addEventListener('scroll', function(){
+    const y = window.scrollY;
+    const goingDown = y > lastY;
+    if (y < 10) {
+      if (topbar) topbar.style.transform = 'translateY(0)';
+      if (botnav) botnav.style.transform = 'translateY(0)';
+    } else if (goingDown) {
+      if (botnav) botnav.style.transform = 'translateY(100%)';
+      if (topbar) topbar.style.transform = 'translateY(0)';
+    } else {
+      if (topbar) topbar.style.transform = 'translateY(-100%)';
+      if (botnav) botnav.style.transform = 'translateY(0)';
+    }
+    lastY = y;
+  }, { passive: true });
+})();
+
+/* ── Level selector ── */
+const LEVEL_COLORS = {
+  n5: '#3a7cbf', n4: '#2a9d8f', n3: '#27ae72', n2: '#d4a017', n1: '#e0693a'
+};
+function showLevel(level) {
+  document.querySelectorAll('[data-level-panel]').forEach(function(panel){
+    panel.style.display = (panel.getAttribute('data-level-panel') === level) ? '' : 'none';
+  });
+  document.querySelectorAll('[data-level-btn]').forEach(function(btn){
+    const isActive = btn.getAttribute('data-level-btn') === level;
+    const label = btn.querySelector('span:last-child');
+    if (isActive) {
+      btn.classList.add('active');
+      btn.style.borderColor = LEVEL_COLORS[level];
+      btn.style.background = '#eef5fc';
+      if (label) { label.classList.remove('t-ink2'); label.classList.add('t-ink'); }
+    } else {
+      btn.classList.remove('active');
+      btn.style.borderColor = 'transparent';
+      btn.style.background = '';
+      if (label) { label.classList.remove('t-ink'); label.classList.add('t-ink2'); }
+    }
+  });
+  const target = document.getElementById(level);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+/* Sidebar quick-links (desktop) also switch the panel instead of relying on anchor alone */
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('a[href^="#n"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      showLevel(a.getAttribute('href').substring(1));
+    });
+  });
+});
+</script>
+
+<script>
+(function(){
+  var PAGE='jlpt/index.html'; var PROG=65;
+  try {
+    var list = JSON.parse(localStorage.getItem('shikaku_recent') || '[]');
+    list = list.filter(function(x){ return x.url !== PAGE; });
+    list.unshift({ url: PAGE, ts: Date.now(), prog: PROG });
+    if(list.length > 10) list = list.slice(0, 10);
+    localStorage.setItem('shikaku_recent', JSON.stringify(list));
+  } catch(e) {}
+})();
+</script>
+
+  <script>
+    if('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .catch(e => console.log('SW error:', e));
+      });
+    }
+  </script>
+</body>
+</html>
