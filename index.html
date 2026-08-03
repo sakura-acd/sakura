@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R0PBY0FQ2G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R0PBY0FQ2G');
+</script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E"/>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JLPT — Sakura</title>
+  <title>Sakura Academy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -13,7 +22,10 @@
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans:['Outfit','sans-serif'], jp:['"Noto Sans JP"','sans-serif'] },
+          fontFamily: {
+            sans: ['Outfit','sans-serif'],
+            jp:   ['"Noto Sans JP"','sans-serif'],
+          },
           colors: {
             blue:   { DEFAULT:'#7eb8e4', deep:'#3a7cbf' },
             teal:   { DEFAULT:'#6ecec8', deep:'#2a9d8f' },
@@ -50,486 +62,459 @@
                   #0c1220;
     }
 
+    @keyframes ring-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(110,206,200,.55); }
+      50%      { box-shadow:0 0 0 6px rgba(110,206,200,0); }
+    }
+    .avatar-ring {
+      background: conic-gradient(#6ecec8 0% 65%,#e2e8f0 65% 100%);
+      border-radius:9999px; padding:2.5px;
+      animation:ring-pulse 2.4s ease infinite;
+      display:inline-block; flex-shrink:0;
+    }
+
     @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
-    .fu  { animation:fadeUp .5s ease both; }
-    .d1  { animation-delay:.07s; } .d2 { animation-delay:.14s; }
-    .d3  { animation-delay:.21s; } .d4 { animation-delay:.28s; }
-    .d5  { animation-delay:.35s; } .d6 { animation-delay:.42s; }
+    .fu { animation:fadeUp .5s ease both; }
+    .d1{animation-delay:.07s} .d2{animation-delay:.14s}
+    .d3{animation-delay:.21s} .d4{animation-delay:.28s} .d5{animation-delay:.35s}
 
     .card-lift { transition:transform .18s ease,box-shadow .18s ease; }
     .card-lift:hover { transform:translateY(-3px); box-shadow:0 10px 32px rgba(15,23,42,.13); }
 
     .ring-track { stroke:#e2e8f0; }
-    .ring-fill  { stroke:#3a7cbf; stroke-linecap:round;
+    .ring-fill  { stroke:#6ecec8; stroke-linecap:round;
                   transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1); }
 
-    .s-act { background:#eef5fc; color:#3a7cbf; font-weight:600; }
+    .pbar { transition:width 1s cubic-bezier(.4,0,.2,1); }
 
     .drop { transition:opacity .15s ease,transform .15s ease; }
     .drop.closed { opacity:0; transform:translateY(-6px); pointer-events:none; }
     .drop.open   { opacity:1; transform:translateY(0);    pointer-events:all; }
 
-    /* Level button active state */
-    .level-btn { transition:all .2s ease; }
-    .level-btn.active { transform:translateY(-2px); }
+    #bcard { transition:transform .32s cubic-bezier(.4,0,.2,1); }
+    .s-act { background:#eef5fc; color:#3a7cbf; font-weight:600; }
 
-    /* Dark mode */
+    body.dark .dk-bg  { background:#0c1220 !important; }
     body.dark #sidebar-el { background:rgba(14,19,32,.96) !important; border-color:#1d2740 !important; }
-    body.dark #topbar,
-    body.dark #botnav { background:rgba(12,18,32,.68) !important; border-color:rgba(255,255,255,.08) !important; }
+    body.dark #topbar, body.dark #botnav { background:rgba(12,18,32,.75) !important; border-color:rgba(255,255,255,.08) !important; }
     body.dark .surface  { background:#151d2e !important; border-color:#1d2740 !important; }
     body.dark .surface2 { background:#1d2740 !important; }
     body.dark .t-ink    { color:#e8eef6 !important; }
     body.dark .t-ink2   { color:#8da4c0 !important; }
     body.dark .t-muted  { color:#4a607a !important; }
-    body.dark .divider  { border-color:#1d2740 !important; }
     body.dark .ring-track { stroke:#1d2740; }
-    body.dark #desk-lang-drop { background:#151d2e !important; border-color:#1d2740 !important; }
-    body.dark #desk-lang-drop button { color:#8da4c0 !important; }
-    body.dark #lang-drop { background:#151d2e !important; border-color:#1d2740 !important; }
-    body.dark #lang-drop button { color:#8da4c0 !important; }
+    body.dark .avatar-ring { background:conic-gradient(#6ecec8 0% 65%,#1d2740 65% 100%); }
+    body.dark #bcard    { background:#151d2e !important; }
+    body.dark #prof-drop, body.dark #lang-drop, body.dark #desk-lang-drop, body.dark #desk-prof-drop { background:#151d2e !important; border-color:#1d2740 !important; }
+    body.dark #prof-drop a, body.dark #lang-drop button, body.dark #desk-lang-drop button, body.dark #desk-prof-drop a { color:#8da4c0 !important; }
+    body.dark #prof-drop a:hover, body.dark #lang-drop button:hover, body.dark #desk-lang-drop button:hover, body.dark #desk-prof-drop a:hover { background:rgba(126,184,228,.08) !important; }
+    body.dark .divider  { border-color:#1d2740 !important; }
 
     ::-webkit-scrollbar { width:4px; }
     ::-webkit-scrollbar-thumb { background:#c2d3e3; border-radius:99px; }
   </style>
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#e8799a"/>
+  <!-- Safari PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
   <meta name="apple-mobile-web-app-title" content="Sakura"/>
   <link rel="apple-touch-icon" href="icons/icon-192.png"/>
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VK64G24LYX"></script>
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png"/>
+  <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png"/>
+  <!-- Mobile web -->
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="application-name" content="Sakura"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R0PBY0FQ2G"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-VK64G24LYX');
   </script>
 </head>
 
 <body class="mesh-light min-h-screen text-ink" id="body">
 
-<!-- ═══════════ DESKTOP SIDEBAR ═══════════ -->
+
+<!-- ═══════════════ DESKTOP SIDEBAR ═══════════════ -->
 <aside id="sidebar-el" class="hidden lg:flex flex-col fixed top-0 left-0 h-full w-60 bg-bg-surface surface border-r border-slate-100 divider z-30 shadow-card">
 
-  <!-- Logo + lang -->
   <div class="px-4 py-4 flex items-center gap-3 border-b border-slate-100 divider">
     <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue to-teal flex items-center justify-center shadow-md flex-shrink-0">
       <span class="jp text-white font-bold text-base">識</span>
     </div>
-    <div class="flex-1 min-w-0">
-      <div class="font-bold text-base tracking-tight t-ink leading-tight">Shikaku</div>
+    <div class="min-w-0 flex-1">
+      <div class="font-bold text-base tracking-tight t-ink leading-tight">Sakura</div>
       <div class="text-xs t-muted">日本語 Learning</div>
+    </div>
+    <div class="relative flex-shrink-0" id="desk-lang-wrap">
+      <button onclick="toggleDeskLang()"
+        class="flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-200 divider text-xs font-bold t-ink2 transition-all hover:border-blue/60 hover:text-blue-deep"
+        style="background:#f8fafc;">
+        <span id="desk-lang-flag">🇬🇧</span>
+        <span id="desk-lang-code" class="ml-0.5">EN</span>
+        <svg id="desk-lang-chev" class="w-3 h-3 t-muted transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div id="desk-lang-drop" class="drop closed absolute right-0 top-full mt-1.5 w-44 bg-white surface rounded-xl shadow-lg2 border border-slate-100 divider overflow-hidden z-50">
+        <a href="index.html" onclick="setDeskLang('EN','🇬🇧')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors">🇬🇧 English</a>
+        <a href="coming-soon.html" onclick="setDeskLang('NP','🇳🇵')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇳🇵 नेपाली</a>
+        <a href="coming-soon.html" onclick="setDeskLang('HI','🇮🇳')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇮🇳 हिन्दी</a>
+        <a href="coming-soon.html" onclick="setDeskLang('SI','🇱🇰')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇱🇰 සිංහල</a>
+        <a href="coming-soon.html" onclick="setDeskLang('BN','🇧🇩')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇧🇩 বাংলা</a>
+        <a href="coming-soon.html" onclick="setDeskLang('VI','🇻🇳')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇻🇳 Tiếng Việt</a>
+        <a href="coming-soon.html" onclick="setDeskLang('ID','🇮🇩')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇮🇩 Indonesia</a>
+        <a href="coming-soon.html" onclick="setDeskLang('TH','🇹🇭')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇹🇭 ภาษาไทย</a>
+        <a href="coming-soon.html" onclick="setDeskLang('JP','🇯🇵')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇯🇵 日本語</a>
+      </div>
     </div>
   </div>
 
-  <div class="px-4 py-3 border-b border-slate-100 divider">
-    <a href="../index.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all hover:bg-bg-s2 group" style="background:rgba(58,124,191,.06);">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue to-teal flex items-center justify-center flex-shrink-0 shadow-sm">
-        <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.3" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg>
+  <div class="px-5 py-4 flex items-center gap-3 border-b border-slate-100 divider relative" id="desk-prof-wrap">
+    <button onclick="toggleDeskProf()" class="flex items-center gap-3 flex-1 min-w-0 focus:outline-none" aria-label="Profile">
+      <div class="avatar-ring flex-shrink-0">
+        <div id="sb-avatar" class="w-9 h-9 rounded-full bg-gradient-to-br from-blue to-teal flex items-center justify-center text-white font-bold text-sm overflow-hidden">S</div>
       </div>
-      <div>
-        <div class="font-bold text-sm t-ink leading-tight">Home</div>
-        <div class="text-[10px] t-muted">Back to Dashboard</div>
+      <div class="flex-1 min-w-0 text-left">
+        <div class="font-semibold text-sm t-ink leading-tight" id="sb-name">hye mate</div>
       </div>
-      <svg class="w-4 h-4 t-muted ml-auto group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
-    </a>
+      <svg id="desk-prof-chev" class="w-3.5 h-3.5 t-muted transition-transform duration-200 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div id="desk-prof-drop" class="drop closed absolute left-3 right-3 top-full mt-1 bg-white surface rounded-xl2 shadow-lg2 border border-slate-100 divider overflow-hidden z-50">
+      <div class="px-4 py-3 bg-gradient-to-r from-blue/6 to-teal/6 border-b border-slate-100 divider">
+        <div class="font-bold text-sm t-ink" id="desk-drop-name">hye mate</div>
+      </div>
+      <a href="profile/index.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm t-ink2 hover:bg-blue/5 transition-colors">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        My Profile
+      </a>
+      <a href="english/download/index.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm t-ink2 hover:bg-blue/5 transition-colors border-t border-slate-100 divider">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M4 20h16"/></svg>
+        Download App
+      </a>
+
+    </div>
   </div>
 
-  <!-- Nav -->
   <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-    <a href="../index.html"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg>Dashboard
-    </a>
-    <a href="../learn.html"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Learn
-    </a>
-    <a href="../study.html"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 4v16M2 12h6"/></svg>Study
-    </a>
-    <a href="../quiz/index.html"   class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>Quiz
-    </a>
     <a href="index.html" class="s-act flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>JLPT
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg>
+      Dashboard
     </a>
-    <div class="pt-4 pb-1 px-3 text-[10px] font-bold tracking-widest t-muted uppercase">JLPT Levels</div>
-    <a href="#n5"  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-blue/20 text-blue-deep font-bold text-[10px] flex items-center justify-center">N5</span> JLPT N5</a>
-    <a href="#n4" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-teal/20 text-teal-deep font-bold text-[10px] flex items-center justify-center">N4</span> JLPT N4</a>
-    <a href="#n3" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-mint/20 text-mint-deep font-bold text-[10px] flex items-center justify-center">N3</span> JLPT N3</a>
-    <a href="#n2" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-butter/20 text-butter-deep font-bold text-[10px] flex items-center justify-center">N2</span> JLPT N2</a>
-    <a href="#n1" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-coral/20 text-coral-deep font-bold text-[10px] flex items-center justify-center">N1</span> JLPT N1</a>
+    <a href="english/learn.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Learn
+    </a>
+    <a href="english/study.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M8 4v16M2 12h6"/></svg>
+      Study
+    </a>
+    <a href="english/quiz.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
+      Quiz
+    </a>
+    <div class="pt-4 pb-1 px-3 text-[10px] font-bold tracking-widest t-muted uppercase">Courses</div>
+    <a href="english/jlpt/index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      JLPT
+    </a>
+    <a href="english/ssw/index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-mint/20 text-mint-deep font-bold text-[10px] flex items-center justify-center">SSW</span> SSW</a>
+    <a href="english/bjt/index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm t-ink2 hover:bg-bg-s2 transition-all"><span class="w-5 h-5 rounded bg-butter/20 text-butter-deep font-bold text-[10px] flex items-center justify-center">BJT</span> BJT</a>
   </nav>
 
-  <!-- Footer -->
   <div class="px-4 py-4 border-t border-slate-100 divider flex items-center justify-between">
     <button onclick="toggleDark()" class="flex items-center gap-2 text-xs t-muted hover:text-ink transition-colors">
       <svg id="desk-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <span id="desk-lbl">Dark mode</span>
+    
     </button>
   </div>
 </aside>
 
 
-<!-- ═══════════ MOBILE TOPBAR ═══════════ -->
+<!-- ═══════════════ MOBILE TOP BAR ═══════════════ -->
 <header id="topbar" class="lg:hidden fixed top-0 left-0 right-0 z-40 px-4 py-2.5 flex items-center transition-transform duration-300"
         style="background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:0.5px solid rgba(0,0,0,.08);">
-  <a href="../index.html" class="flex-shrink-0 mr-2 t-ink2">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
-  </a>
-  <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none select-none">
-    <span class="text-lg">📝</span>
-    <span class="font-extrabold text-base t-ink tracking-tight">JLPT</span>
+  <div class="relative flex-shrink-0" id="prof-wrap">
+    <button id="prof-btn" onclick="toggleDrop('prof')" class="block focus:outline-none" aria-label="Profile">
+      <div class="avatar-ring">
+        <div id="mob-avatar" class="w-9 h-9 rounded-full bg-gradient-to-br from-blue to-teal flex items-center justify-center text-white font-bold text-sm select-none overflow-hidden">S</div>
+      </div>
+    </button>
+    <div id="prof-drop" class="drop closed absolute top-full left-0 mt-2 w-52 bg-white surface rounded-xl2 shadow-lg2 border border-slate-100 divider overflow-hidden z-50">
+      <div class="px-4 py-3 bg-gradient-to-r from-blue/6 to-teal/6 border-b border-slate-100 divider">
+        <div class="font-bold text-sm t-ink" id="mob-drop-name">hye mate</div>
+      </div>
+      <a href="english/profile/index.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm t-ink2 hover:bg-blue/5 transition-colors">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        My Profile
+      </a>
+      <a href="english/download/index.html" class="flex items-center gap-2.5 px-4 py-2.5 text-sm t-ink2 hover:bg-blue/5 transition-colors border-t border-slate-100 divider">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M4 20h16"/></svg>
+        Download App
+      </a>
+
+    </div>
   </div>
+
   <div class="ml-auto flex items-center gap-2 flex-shrink-0">
-    <button onclick="toggleDark()" class="w-8 h-8 rounded-lg bg-bg-s2 border border-slate-200 flex items-center justify-center t-muted hover:text-blue-deep hover:border-blue/50 transition-all">
+    <div class="relative" id="lang-wrap">
+      <button onclick="toggleDrop('lang')" class="flex items-center gap-1 pl-2 pr-1.5 py-1.5 rounded-lg bg-bg-s2 surface2 border border-slate-200 divider text-xs font-bold t-ink2 hover:border-blue/60 transition-all">
+        <span id="lang-flag">🇬🇧</span>
+        <span id="lang-code" class="ml-0.5">EN</span>
+        <svg id="lang-chev" class="w-3 h-3 t-muted ml-0.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div id="lang-drop" class="drop closed absolute right-0 top-full mt-1.5 w-44 bg-white surface rounded-xl shadow-lg2 border border-slate-100 divider overflow-hidden z-50">
+        <a href="index.html"    onclick="setLang('EN','🇬🇧')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors">🇬🇧 English</a>
+        <a href="coming-soon.html" onclick="setLang('NP','🇳🇵')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇳🇵 नेपाली</a>
+        <a href="coming-soon.html" onclick="setLang('HI','🇮🇳')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇮🇳 हिन्दी</a>
+        <a href="coming-soon.html" onclick="setLang('SI','🇱🇰')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇱🇰 සිංහල</a>
+        <a href="coming-soon.html" onclick="setLang('BN','🇧🇩')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇧🇩 বাংলা</a>
+        <a href="coming-soon.html" onclick="setLang('VI','🇻🇳')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇻🇳 Tiếng Việt</a>
+        <a href="coming-soon.html" onclick="setLang('ID','🇮🇩')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇮🇩 Indonesia</a>
+        <a href="coming-soon.html" onclick="setLang('TH','🇹🇭')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇹🇭 ภาษาไทย</a>
+        <a href="coming-soon.html" onclick="setLang('JP','🇯🇵')" class="w-full flex items-center gap-2 px-3.5 py-2.5 text-xs font-medium t-ink hover:bg-blue/5 transition-colors border-t border-slate-100 divider">🇯🇵 日本語</a>
+      </div>
+    </div>
+    <button onclick="toggleDark()" class="w-8 h-8 rounded-lg bg-bg-s2 surface2 border border-slate-200 divider flex items-center justify-center t-muted hover:text-blue-deep hover:border-blue/50 transition-all">
       <svg id="mob-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
   </div>
 </header>
 
 
-<!-- ═══════════ MAIN CONTENT ═══════════ -->
-<main class="lg:ml-60 min-h-screen pb-28 lg:pb-10 pt-14 lg:pt-0">
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+<main class="lg:ml-60 min-h-screen pb-28 lg:pb-10 pt-16 lg:pt-0">
 
-  <!-- Hero -->
-  <section class="px-5 lg:px-8 pt-5 lg:pt-8 fu">
-    <div class="relative overflow-hidden rounded-xl4 px-6 py-7 lg:py-9 shadow-card border border-slate-100 divider"
-         style="background:linear-gradient(135deg,rgba(126,184,228,.16),rgba(196,168,224,.10));">
-      <div class="relative z-10 max-w-[60%] lg:max-w-[46%]">
-        <div class="hidden lg:block text-[11px] font-extrabold tracking-widest uppercase text-blue-deep mb-2">Japanese Language Proficiency Test</div>
-        <h1 class="text-2xl lg:text-4xl font-extrabold t-ink leading-tight tracking-tight">JLPT Levels</h1>
-        <p class="mt-1.5 text-xs lg:text-sm t-ink2 leading-relaxed">Pick a level to study vocabulary, grammar, kanji and more.</p>
-      </div>
-      <div class="absolute top-3 right-3 lg:top-6 lg:right-10 text-6xl lg:text-8xl opacity-90 select-none">📝</div>
-    </div>
-  </section>
-
-  <!-- Your Progress -->
-  <section class="px-5 lg:px-8 mt-5 lg:mt-6 fu d1">
-    <div class="bg-bg-surface surface rounded-xl4 shadow-card border border-slate-100 divider p-6">
-      <div class="flex items-center justify-between mb-5">
-        <h3 class="text-sm font-bold t-ink">Your Progress</h3>
-        <a href="#" class="text-xs font-bold text-blue-deep">See Details</a>
+  <!-- Greeting + Slide box -->
+  <section class="px-5 lg:px-8 pt-6 lg:pt-8 pb-2">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <div class="fu">
+        <h1 class="text-2xl lg:text-3xl font-extrabold t-ink leading-tight tracking-tight">
+          <span id="greeting-name">hye mate</span>, Let's start<br class="lg:hidden"/> today's lesson!
+        </h1>
+        <p class="mt-1.5 text-sm t-ink2">You have <span class="font-bold text-blue-deep">15 cards</span> left today.</p>
       </div>
 
-      <div class="flex items-center gap-5 mb-6">
-        <div class="relative w-28 h-28 flex-shrink-0">
-          <svg class="w-28 h-28 -rotate-90" viewBox="0 0 112 112">
-            <circle class="ring-track" cx="56" cy="56" r="48" fill="none" stroke-width="10"/>
-            <circle class="ring-fill" cx="56" cy="56" r="48" fill="none" stroke-width="10"
-              stroke-dasharray="301.6" stroke-dashoffset="135.7"/>
-          </svg>
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
-            <span class="text-2xl font-extrabold t-ink leading-none">55%</span>
-            <span class="text-[10px] t-muted font-semibold mt-1">Completed</span>
+      <!-- Slide Swipe Box -->
+      <div class="fu d1 self-start w-full lg:w-auto" style="overflow:hidden;border-radius:1.75rem;">
+        <div id="slide-track" style="display:flex;width:200%;transition:transform .5s cubic-bezier(.4,0,.2,1);">
+
+          <!-- SLIDE 1: Goal Ring + Stats -->
+          <div style="width:50%;flex-shrink:0;">
+            <div class="flex items-center gap-5 bg-bg-surface surface rounded-xl4 px-6 py-4 shadow-card border border-slate-100 divider relative">
+              <div class="relative w-24 h-24 flex-shrink-0">
+                <svg class="w-24 h-24 -rotate-90" viewBox="0 0 88 88">
+                  <circle class="ring-track" cx="44" cy="44" r="36" fill="none" stroke-width="7"/>
+                  <circle class="ring-fill" id="goal-ring-fill" cx="44" cy="44" r="36" fill="none" stroke-width="7" stroke-dasharray="226.2" stroke-dashoffset="226.2"/>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                  <span class="text-xl font-extrabold t-ink leading-none" id="goal-ring-pct">0%</span>
+                  <span class="text-[10px] t-muted font-medium mt-0.5">today</span>
+                </div>
+              </div>
+              <div class="space-y-2.5">
+                <div>
+                  <div class="text-[11px] t-muted font-medium mb-1">Words Learned</div>
+                  <div class="flex items-center gap-2">
+                    <div class="h-1.5 w-28 bg-bg-s2 surface2 rounded-full overflow-hidden"><div class="h-full bg-teal rounded-full pbar" id="words-bar" style="width:0%"></div></div>
+                    <span class="text-xs font-bold t-ink2" id="words-val">0/20</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-[11px] t-muted font-medium mb-1">Quiz Score</div>
+                  <div class="flex items-center gap-2">
+                    <div class="h-1.5 w-28 bg-bg-s2 surface2 rounded-full overflow-hidden"><div class="h-full bg-blue-deep rounded-full pbar" id="quiz-bar" style="width:0%"></div></div>
+                    <span class="text-xs font-bold t-ink2" id="quiz-val">0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute bottom-2 right-4 flex gap-1">
+                <div style="width:6px;height:6px;border-radius:50%;background:#3a7cbf;"></div>
+                <div id="dot2" style="width:6px;height:6px;border-radius:50%;background:#e2e8f0;"></div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="flex-1 space-y-3.5">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0" style="background:#27ae72;">✓</div>
-            <div><div class="font-extrabold text-base t-ink leading-tight">44</div><div class="text-[11px] t-muted">Lessons Completed</div></div>
+          <!-- SLIDE 2: Word of Day -->
+          <div style="width:50%;flex-shrink:0;">
+            <div class="bg-bg-surface surface rounded-xl4 shadow-card border border-slate-100 divider px-5 py-4 relative" style="background:linear-gradient(135deg,rgba(126,184,228,.09),rgba(110,206,200,.06));">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-extrabold t-muted uppercase tracking-wider">✨ Word of the Day</span>
+                <span id="wotd-num" class="text-[10px] t-muted"></span>
+              </div>
+              <div class="flex items-center gap-4 mb-3">
+                <div class="flex-shrink-0">
+                  <div id="wotd-word" class="jp font-bold t-ink" style="font-size:2.2rem;line-height:1;"></div>
+                  <div id="wotd-reading" class="jp text-sm t-muted mt-1"></div>
+                  <div id="wotd-romaji" class="text-xs t-muted" style="font-style:italic;"></div>
+                </div>
+                <div class="flex-1 border-l border-slate-200 pl-4">
+                  <div id="wotd-meaning" class="font-bold text-sm t-ink mb-1"></div>
+                  <div id="wotd-example" class="jp text-xs leading-relaxed" style="color:#475569;"></div>
+                  <div id="wotd-ex-meaning" class="text-[11px] t-muted mt-0.5" style="font-style:italic;"></div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="prevWotd()" class="w-7 h-7 rounded-full flex items-center justify-center font-bold t-muted text-base" style="background:#eef2f7;border:none;cursor:pointer;">‹</button>
+                <div id="wotd-dots" class="flex gap-1.5 flex-1 justify-center"></div>
+                <button onclick="nextWotd()" class="w-7 h-7 rounded-full flex items-center justify-center font-bold t-muted text-base" style="background:#eef2f7;border:none;cursor:pointer;">›</button>
+              </div>
+              <div class="absolute bottom-2 right-4 flex gap-1">
+                <div id="dot1" style="width:6px;height:6px;border-radius:50%;background:#e2e8f0;"></div>
+                <div style="width:6px;height:6px;border-radius:50%;background:#3a7cbf;"></div>
+              </div>
+            </div>
           </div>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0" style="background:#d4a017;">★</div>
-            <div><div class="font-extrabold text-base t-ink leading-tight">132 / 240</div><div class="text-[11px] t-muted">Points</div></div>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs text-white flex-shrink-0" style="background:#e0693a;">🔥</div>
-            <div><div class="font-extrabold text-base t-ink leading-tight">12</div><div class="text-[11px] t-muted">Day Streak</div></div>
-          </div>
-        </div>
-      </div>
 
-      <button class="w-full flex items-center justify-center gap-2 rounded-xl2 py-3.5 text-white text-sm font-bold shadow-md2 bg-gradient-to-br from-blue to-blue-deep hover:brightness-105 transition-all mb-5">
-        Continue Learning
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-
-      <div class="space-y-1.5">
-        <div class="flex justify-between text-xs">
-          <span class="font-semibold t-ink2">Lesson 14: 〜ています</span>
-          <span class="font-extrabold t-ink">73%</span>
-        </div>
-        <div class="h-1.5 rounded-full overflow-hidden" style="background:#eef2f7;">
-          <div class="h-full rounded-full" style="width:73%;background:linear-gradient(90deg,#7eb8e4,#3a7cbf);"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Level Selector (large buttons) -->
-  <div class="px-5 lg:px-8 mt-4 fu">
-    <h2 class="text-sm font-bold t-ink mb-3">Choose Your Level</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-      <button onclick="showLevel('n5')" data-level-btn="n5" class="level-btn active card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 transition-all bg-bg-surface surface" style="border-color:#3a7cbf;background:#eef5fc;">
-        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#7eb8e4,#3a7cbf);">N5</span>
-        <span class="text-sm font-bold t-ink">Beginner</span>
-      </button>
-      <button onclick="showLevel('n4')" data-level-btn="n4" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
-        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#6ecec8,#2a9d8f);">N4</span>
-        <span class="text-sm font-bold t-ink2">Elementary</span>
-      </button>
-      <button onclick="showLevel('n3')" data-level-btn="n3" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
-        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#80d4a8,#27ae72);">N3</span>
-        <span class="text-sm font-bold t-ink2">Intermediate</span>
-      </button>
-      <button onclick="showLevel('n2')" data-level-btn="n2" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
-        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#f5da8a,#d4a017);">N2</span>
-        <span class="text-sm font-bold t-ink2">Upper-Int</span>
-      </button>
-      <button onclick="showLevel('n1')" data-level-btn="n1" class="level-btn card-lift flex flex-col items-center gap-2 py-6 rounded-xl3 border-2 border-transparent transition-all bg-bg-surface surface">
-        <span class="w-12 h-12 rounded-full flex items-center justify-center text-base text-white font-extrabold shadow" style="background:linear-gradient(135deg,#f4a57a,#e0693a);">N1</span>
-        <span class="text-sm font-bold t-ink2">Advanced</span>
-      </button>
+  <!-- Filter tabs -->
+  <section class="px-5 lg:px-8 mt-4 fu d2">
+    <div class="flex gap-2 overflow-x-auto pb-1" style="scrollbar-width:none">
+      <button class="flex-shrink-0 px-4 py-1.5 rounded-full bg-blue-deep text-white text-xs font-bold shadow-sm">All</button>
+      <a href="english/jlpt/index.html"  class="flex-shrink-0 px-4 py-1.5 rounded-full bg-bg-surface surface t-ink2 text-xs font-medium border border-slate-200 hover:border-blue hover:text-blue-deep transition-all">JLPT</a>
+      <a href="english/ssw/index.html"   class="flex-shrink-0 px-4 py-1.5 rounded-full bg-bg-surface surface t-ink2 text-xs font-medium border border-slate-200 hover:border-teal hover:text-teal-deep transition-all">SSW</a>
+      <a href="english/bjt/index.html"   class="flex-shrink-0 px-4 py-1.5 rounded-full bg-bg-surface surface t-ink2 text-xs font-medium border border-slate-200 hover:border-mint hover:text-mint-deep transition-all">BJT</a>
+      <a href="english/other/index.html" class="flex-shrink-0 px-4 py-1.5 rounded-full bg-bg-surface surface t-ink2 text-xs font-medium border border-slate-200 hover:border-lilac hover:text-lilac-deep transition-all">Dictionary</a>
     </div>
-  </div>
+  </section>
 
-  <!-- ══ N5 ══ -->
-  <section id="n5" data-level-panel="n5" class="px-5 lg:px-8 mt-5 fu d1" style="--accent:#3a7cbf;--tint:rgba(58,124,191,.08);--tintB:rgba(58,124,191,.3);">
-    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
-      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#7eb8e4,#3a7cbf);">N5</span>
-      <div class="flex-1 min-w-0">
-        <h2 class="text-base font-extrabold t-ink">JLPT N5 <span class="text-sm font-medium t-muted">— Beginner</span></h2>
-        <p class="text-xs t-muted mt-0.5">80+ Kanji · 800+ Words</p>
-      </div>
+  <!-- Continue Today -->
+  <section class="px-5 lg:px-8 mt-5 fu d2" id="continue-section">
+    <h2 class="text-sm font-bold t-ink mb-3 flex items-center gap-2">
+      <span class="w-5 h-5 rounded-full flex items-center justify-center" style="background:rgba(62,124,191,.15);">
+        <svg class="w-3 h-3 text-blue-deep" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </span>
+      Continue Today
+      <span class="ml-auto text-[10px] font-medium t-muted">Recently visited</span>
+    </h2>
+    <div id="recent-pages" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    <div id="no-history" class="hidden rounded-xl3 border border-dashed border-slate-200 p-6 text-center" style="background:#f8fafc">
+      <div class="text-3xl mb-2">👋</div>
+      <div class="text-sm font-semibold t-ink mb-1">No recent pages yet</div>
+      <div class="text-xs t-muted">Pages you visit will appear here so you can quickly continue.</div>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-      <a href="../vocab/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
-        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
-        <span class="text-[10px] t-muted -mt-1">800+ Words</span>
+  </section>
+
+  <!-- Explore Features -->
+  <section class="px-5 lg:px-8 mt-6 fu d3">
+    <h2 class="text-sm font-bold t-ink mb-3 flex items-center gap-2">
+      <span class="w-5 h-5 rounded-full flex items-center justify-center" style="background:rgba(110,206,200,.18);">
+        <svg class="w-3 h-3 text-teal-deep" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </span>
+      Explore Features
+    </h2>
+    <div class="grid grid-cols-4 lg:grid-cols-8 gap-3">
+      <a href="english/quiz/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(128,212,168,.15);">🎯</div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Quiz</span>
       </a>
-      <a href="../grammar/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
-        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
-        <span class="text-[10px] t-muted -mt-1">95+ Patterns</span>
+      <a href="english/news/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(126,184,228,.15);">📰</div>
+        <span class="text-[11px] font-bold t-ink leading-tight">News</span>
       </a>
-      <a href="../kanji/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
-        <span class="text-[10px] t-muted -mt-1">80+ Kanji</span>
+      <a href="english/conversation/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(110,206,200,.15);">💬</div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Daily Talk</span>
       </a>
-      <a href="../readwrite/n5/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
-        <span class="text-[10px] t-muted -mt-1">Combined</span>
+      <a href="english/jobhunt/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(245,218,138,.2);">💼</div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Job Hunt</span>
       </a>
-    </div>
-    <div class="mt-3 flex gap-2">
-      <a href="../quiz/n5/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
-        Start Quiz
+      <a href="english/community/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(196,168,224,.18);">🌐</div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Community</span>
       </a>
-      <a href="../readwrite/n5/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Read & Write Test
+      <a href="english/kanji/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:rgba(244,165,122,.18);">
+          <span class="jp font-bold text-xl" style="color:#e0693a;">書</span>
+        </div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Kanji Write</span>
+      </a>
+      <a href="english/learn/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 bg-bg-surface surface border border-slate-100 divider shadow-card card-lift text-center">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:rgba(110,206,200,.15);">
+          <span class="jp font-bold" style="font-size:20px;color:#2a9d8f;line-height:1;">あア</span>
+        </div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Hiragana/<br>Katakana</span>
+      </a>
+      <a href="english/download/index.html" class="flex flex-col items-center gap-2 p-3 rounded-xl2 border border-slate-100 divider shadow-card card-lift text-center relative overflow-hidden" style="background:linear-gradient(135deg,rgba(58,124,191,.10),rgba(42,157,143,.08));">
+        <span class="absolute top-1.5 right-1.5 text-[8px] font-extrabold px-1.5 py-px rounded-full leading-none" style="background:#3a7cbf;color:#fff;">NEW</span>
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:rgba(58,124,191,.15);">📲</div>
+        <span class="text-[11px] font-bold t-ink leading-tight">Download<br>App</span>
       </a>
     </div>
   </section>
 
-  <!-- ══ N4 ══ -->
-  <section id="n4" data-level-panel="n4" class="px-5 lg:px-8 mt-5 fu d2" style="display:none;--accent:#2a9d8f;--tint:rgba(42,157,143,.08);--tintB:rgba(42,157,143,.3);">
-    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
-      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#6ecec8,#2a9d8f);">N4</span>
-      <div class="flex-1 min-w-0">
-        <h2 class="text-base font-extrabold t-ink">JLPT N4 <span class="text-sm font-medium t-muted">— Elementary</span></h2>
-        <p class="text-xs t-muted mt-0.5">166+ Kanji · 1500+ Words</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-      <a href="../vocab/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
-        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
-        <span class="text-[10px] t-muted -mt-1">1500+ Words</span>
+  <!-- Course Streams -->
+  <section class="px-5 lg:px-8 mt-6 fu d4">
+    <h2 class="text-sm font-bold t-ink mb-3">Course Streams</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <a href="english/jlpt/index.html" class="card-lift bg-bg-surface surface rounded-xl3 p-4 shadow-card border border-slate-100 divider flex flex-col gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue to-blue-deep flex items-center justify-center shadow"><span class="text-white font-extrabold text-sm">N5</span></div>
+        <div><div class="font-bold t-ink text-sm">JLPT</div><div class="text-xs t-muted mt-0.5">N5 → N1 prep</div></div>
+        <div><div class="flex justify-between text-[10px] t-muted mb-1"><span>Progress</span><span class="font-bold" id="jlpt-prog-lbl">0%</span></div><div class="h-1.5 rounded-full overflow-hidden" style="background:#eef2f7"><div class="h-full bg-blue-deep rounded-full pbar" id="jlpt-prog-bar" style="width:0%"></div></div></div>
+        <div class="text-[10px] t-muted">Vocab · Grammar · Kanji · Quiz</div>
       </a>
-      <a href="../grammar/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
-        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
-        <span class="text-[10px] t-muted -mt-1">150+ Patterns</span>
+      <a href="english/ssw/index.html" class="card-lift bg-bg-surface surface rounded-xl3 p-4 shadow-card border border-slate-100 divider flex flex-col gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal to-teal-deep flex items-center justify-center shadow"><span class="jp text-white font-bold text-sm">特</span></div>
+        <div><div class="font-bold t-ink text-sm">SSW</div><div class="text-xs t-muted mt-0.5">Specified Skilled</div></div>
+        <div><div class="flex justify-between text-[10px] t-muted mb-1"><span>Progress</span><span class="font-bold">30%</span></div><div class="h-1.5 rounded-full overflow-hidden" style="background:#eef2f7"><div class="h-full bg-teal-deep rounded-full pbar" style="width:30%"></div></div></div>
+        <div class="text-[10px] t-muted">Caregiver · Agriculture · Food</div>
       </a>
-      <a href="../kanji/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
-        <span class="text-[10px] t-muted -mt-1">166+ Kanji</span>
+      <a href="english/bjt/index.html" class="card-lift bg-bg-surface surface rounded-xl3 p-4 shadow-card border border-slate-100 divider flex flex-col gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-butter to-butter-deep flex items-center justify-center shadow"><span class="jp text-white font-bold text-sm">業</span></div>
+        <div><div class="font-bold t-ink text-sm">BJT</div><div class="text-xs t-muted mt-0.5">Business Japanese</div></div>
+        <div><div class="flex justify-between text-[10px] t-muted mb-1"><span>Progress</span><span class="font-bold">10%</span></div><div class="h-1.5 rounded-full overflow-hidden" style="background:#eef2f7"><div class="h-full bg-butter-deep rounded-full pbar" style="width:10%"></div></div></div>
+        <div class="text-[10px] t-muted">Listening · Reading · Writing</div>
       </a>
-      <a href="../readwrite/n4/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
-        <span class="text-[10px] t-muted -mt-1">Combined</span>
-      </a>
-    </div>
-    <div class="mt-3 flex gap-2">
-      <a href="../quiz/n4/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
-        Start Quiz
-      </a>
-      <a href="../readwrite/n4/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Read & Write Test
+      <a href="english/other/index.html" class="card-lift bg-bg-surface surface rounded-xl3 p-4 shadow-card border border-slate-100 divider flex flex-col gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lilac to-lilac-deep flex items-center justify-center shadow"><span class="jp text-white font-bold text-lg">辞</span></div>
+        <div><div class="font-bold t-ink text-sm">Smart Dict</div><div class="text-xs t-muted mt-0.5">AI-powered lookup</div></div>
+        <div class="text-[10px] t-muted">Tap any word to get meaning + examples.</div>
+        <div class="text-[10px] t-muted">40k entries · Instant search</div>
       </a>
     </div>
   </section>
 
-  <!-- ══ N3 ══ -->
-  <section id="n3" data-level-panel="n3" class="px-5 lg:px-8 mt-5 fu d3" style="display:none;--accent:#27ae72;--tint:rgba(39,174,114,.08);--tintB:rgba(39,174,114,.3);">
-    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
-      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#80d4a8,#27ae72);">N3</span>
-      <div class="flex-1 min-w-0">
-        <h2 class="text-base font-extrabold t-ink">JLPT N3 <span class="text-sm font-medium t-muted">— Intermediate</span></h2>
-        <p class="text-xs t-muted mt-0.5">367+ Kanji · 3750+ Words</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-      <a href="../vocab/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
-        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
-        <span class="text-[10px] t-muted -mt-1">3750+ Words</span>
-      </a>
-      <a href="../grammar/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
-        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
-        <span class="text-[10px] t-muted -mt-1">245+ Patterns</span>
-      </a>
-      <a href="../kanji/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
-        <span class="text-[10px] t-muted -mt-1">367+ Kanji</span>
-      </a>
-      <a href="../readwrite/n3/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
-        <span class="text-[10px] t-muted -mt-1">Combined</span>
-      </a>
-    </div>
-    <div class="mt-3 flex gap-2">
-      <a href="../quiz/n3/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
-        Start Quiz
-      </a>
-      <a href="../readwrite/n3/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Read & Write Test
-      </a>
+  <!-- Recent Activity -->
+  <section class="px-5 lg:px-8 mt-6 fu d5">
+    <h2 class="text-sm font-bold t-ink mb-3">Recent Activity</h2>
+    <div id="activity-list" class="bg-bg-surface surface rounded-xl3 shadow-card border border-slate-100 divider divide-y divide-slate-100 overflow-hidden"></div>
+    <div id="activity-empty" class="hidden rounded-xl3 border border-dashed border-slate-200 p-6 text-center" style="background:#f8fafc;">
+      <div class="text-2xl mb-2">📋</div>
+      <div class="text-sm font-semibold t-ink">No activity yet</div>
+      <div class="text-xs t-muted mt-1">Start a quiz or lesson to see your activity here.</div>
     </div>
   </section>
-
-  <!-- ══ N2 ══ -->
-  <section id="n2" data-level-panel="n2" class="px-5 lg:px-8 mt-5 fu d4" style="display:none;--accent:#d4a017;--tint:rgba(212,160,23,.10);--tintB:rgba(212,160,23,.35);">
-    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
-      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#f5da8a,#d4a017);">N2</span>
-      <div class="flex-1 min-w-0">
-        <h2 class="text-base font-extrabold t-ink">JLPT N2 <span class="text-sm font-medium t-muted">— Upper-Intermediate</span></h2>
-        <p class="text-xs t-muted mt-0.5">367+ Kanji · 6000+ Words</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-      <a href="../vocab/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
-        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
-        <span class="text-[10px] t-muted -mt-1">6000+ Words</span>
-      </a>
-      <a href="../grammar/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
-        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
-        <span class="text-[10px] t-muted -mt-1">370+ Patterns</span>
-      </a>
-      <a href="../kanji/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
-        <span class="text-[10px] t-muted -mt-1">367+ Kanji</span>
-      </a>
-      <a href="../readwrite/n2/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
-        <span class="text-[10px] t-muted -mt-1">Combined</span>
-      </a>
-    </div>
-    <div class="mt-3 flex gap-2">
-      <a href="../quiz/n2/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
-        Start Quiz
-      </a>
-      <a href="../readwrite/n2/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Read & Write Test
-      </a>
-    </div>
-  </section>
-
-  <!-- ══ N1 ══ -->
-  <section id="n1" data-level-panel="n1" class="px-5 lg:px-8 mt-5 fu d5" style="display:none;--accent:#e0693a;--tint:rgba(224,105,58,.09);--tintB:rgba(224,105,58,.3);">
-    <div class="flex items-center gap-3 rounded-xl3 p-4 mb-4" style="background:linear-gradient(135deg,var(--tint),transparent);border:1px solid var(--tintB);">
-      <span class="w-11 h-11 rounded-xl2 flex items-center justify-center font-extrabold text-base text-white shadow flex-shrink-0" style="background:linear-gradient(135deg,#f4a57a,#e0693a);">N1</span>
-      <div class="flex-1 min-w-0">
-        <h2 class="text-base font-extrabold t-ink">JLPT N1 <span class="text-sm font-medium t-muted">— Advanced</span></h2>
-        <p class="text-xs t-muted mt-0.5">1000+ Kanji · 10000+ Words</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-      <a href="../vocab/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📚</div>
-        <span class="text-xs font-bold t-ink leading-tight">Vocab</span>
-        <span class="text-[10px] t-muted -mt-1">10000+ Words</span>
-      </a>
-      <a href="../grammar/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-2xl" style="background:var(--tint);">📝</div>
-        <span class="text-xs font-bold t-ink leading-tight">Grammar</span>
-        <span class="text-[10px] t-muted -mt-1">450+ Patterns</span>
-      </a>
-      <a href="../kanji/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-2xl" style="color:var(--accent);">漢</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Kanji</span>
-        <span class="text-[10px] t-muted -mt-1">1000+ Kanji</span>
-      </a>
-      <a href="../readwrite/n1/index.html" class="card-lift flex flex-col items-center gap-2 py-5 px-2 rounded-xl2 border text-center bg-bg-surface surface" style="border-color:var(--tintB);">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:var(--tint);"><span class="jp font-bold text-xl" style="color:var(--accent);">字</span></div>
-        <span class="text-xs font-bold t-ink leading-tight">Read & Write</span>
-        <span class="text-[10px] t-muted -mt-1">Combined</span>
-      </a>
-    </div>
-    <div class="mt-3 flex gap-2">
-      <a href="../quiz/n1/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:var(--tint);color:var(--accent);border-color:var(--tintB);">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.8 3.6A9 9 0 1 0 20.4 16.2"/></svg>
-        Start Quiz
-      </a>
-      <a href="../readwrite/n1/index.html" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all border" style="background:#f8fafc;color:#475569;border-color:#e2e8f0;">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Read & Write Test
-      </a>
-    </div>
-  </section>
-
 
 </main>
 
 
-
-<!-- ═══════════ MOBILE BOTTOM NAV ═══════════ -->
+<!-- ═══════════════ MOBILE BOTTOM NAV ═══════════════ -->
 <nav id="botnav" class="lg:hidden fixed bottom-3 left-3 right-3 z-40 transition-transform duration-300 rounded-full shadow-lg2"
      style="background:rgba(255,255,255,.85);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);">
   <div class="flex items-center" style="height:66px;">
-    <a href="../index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5 relative">
-      <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg>
-      <span class="text-[11px] font-semibold t-muted">Home</span>
-    </a>
-    <a href="../jlpt.html" class="flex-1 flex flex-col items-center justify-center gap-1.5 relative">
-      <svg width="24" height="24" fill="none" stroke="#2a9d8f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M2 4h6a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H2z"/><path d="M22 4h-6a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H22z"/></svg>
-      <span class="text-[11px] font-bold" style="color:#2a9d8f;">JLPT</span>
+    <a href="index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5 relative">
+      <svg width="24" height="24" fill="none" stroke="#2a9d8f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg>
+      <span class="text-[11px] font-bold" style="color:#2a9d8f;">Home</span>
       <span class="absolute -bottom-1.5 w-5 h-[3px] rounded-full" style="background:#2a9d8f;"></span>
     </a>
-    <a href="../ssw.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+    <a href="english/jlpt/index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+      <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M2 4h6a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H2z"/><path d="M22 4h-6a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H22z"/></svg>
+      <span class="text-[11px] font-semibold t-muted">JLPT</span>
+    </a>
+    <a href="english/ssw/index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
       <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m12 3 10 5.5-10 5.5L2 8.5 12 3Z"/><path d="M6 11v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5"/></svg>
       <span class="text-[11px] font-semibold t-muted">SSW</span>
     </a>
-    <a href="../quiz/index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+    <a href="english/quiz/index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
       <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M4 20h2.5L18 8.5a1.8 1.8 0 0 0-2.5-2.5L4 17.5V20Z"/></svg>
       <span class="text-[11px] font-semibold t-muted">Quiz</span>
     </a>
-    <a href="../other.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
+    <a href="english/other/index.html" class="flex-1 flex flex-col items-center justify-center gap-1.5">
       <svg width="24" height="24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
       <span class="text-[11px] font-semibold t-muted">More</span>
     </a>
@@ -537,19 +522,27 @@
 </nav>
 
 
-<!-- ═══════════ SCRIPTS ═══════════ -->
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
 <script>
+/* ── Desktop profile dropdown ── */
+let deskProfOpen = false;
+function toggleDeskProf() {
+  deskProfOpen = !deskProfOpen;
+  const drop = document.getElementById('desk-prof-drop');
+  const chev = document.getElementById('desk-prof-chev');
+  drop.className = drop.className.replace(/\b(open|closed)\b/, deskProfOpen ? 'open' : 'closed');
+  if(chev) chev.style.transform = deskProfOpen ? 'rotate(180deg)' : '';
+}
+
+/* ── Dark mode ── */
 let isDark = false;
 const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
 const SUN  = '<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/><circle cx="12" cy="12" r="4"/>';
-
 function toggleDark() {
   isDark = !isDark;
-  document.body.className = isDark
-    ? 'mesh-dark min-h-screen text-slate-100 dark'
-    : 'mesh-light min-h-screen text-ink';
+  document.body.className = isDark ? 'mesh-dark min-h-screen text-slate-100 dark' : 'mesh-light min-h-screen text-ink';
   ['mob-icon','desk-icon'].forEach(id => { const el = document.getElementById(id); if(el) el.innerHTML = isDark ? SUN : MOON; });
-  const l = document.getElementById('desk-lbl'); if(l) l.textContent = isDark ? 'Light mode' : 'Dark mode';
+  const lbl = document.getElementById('desk-lbl'); if(lbl) lbl.textContent = isDark ? 'Light mode' : 'Dark mode';
 }
 
 /* ── Scroll-direction nav show/hide (mobile only) ──
@@ -576,63 +569,205 @@ function toggleDark() {
   }, { passive: true });
 })();
 
-/* ── Level selector ── */
-const LEVEL_COLORS = {
-  n5: '#3a7cbf', n4: '#2a9d8f', n3: '#27ae72', n2: '#d4a017', n1: '#e0693a'
-};
-function showLevel(level) {
-  document.querySelectorAll('[data-level-panel]').forEach(function(panel){
-    panel.style.display = (panel.getAttribute('data-level-panel') === level) ? '' : 'none';
-  });
-  document.querySelectorAll('[data-level-btn]').forEach(function(btn){
-    const isActive = btn.getAttribute('data-level-btn') === level;
-    const label = btn.querySelector('span:last-child');
-    if (isActive) {
-      btn.classList.add('active');
-      btn.style.borderColor = LEVEL_COLORS[level];
-      btn.style.background = '#eef5fc';
-      if (label) { label.classList.remove('t-ink2'); label.classList.add('t-ink'); }
-    } else {
-      btn.classList.remove('active');
-      btn.style.borderColor = 'transparent';
-      btn.style.background = '';
-      if (label) { label.classList.remove('t-ink'); label.classList.add('t-ink2'); }
-    }
-  });
-  const target = document.getElementById(level);
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+/* ── Language ── */
+let deskLangOpen = false;
+function toggleDeskLang() {
+  deskLangOpen = !deskLangOpen;
+  const m = document.getElementById('desk-lang-drop'), c = document.getElementById('desk-lang-chev');
+  m.className = m.className.replace(/\b(open|closed)\b/, deskLangOpen ? 'open' : 'closed');
+  c.style.transform = deskLangOpen ? 'rotate(180deg)' : '';
 }
-/* Sidebar quick-links (desktop) also switch the panel instead of relying on anchor alone */
-document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('a[href^="#n"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      showLevel(a.getAttribute('href').substring(1));
-    });
-  });
-});
-</script>
+function setDeskLang(code, flag) {
+  ['desk-lang-code','lang-code'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=code; });
+  ['desk-lang-flag','lang-flag'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=flag; });
+  deskLangOpen = false;
+  document.getElementById('desk-lang-drop').className = document.getElementById('desk-lang-drop').className.replace(/\b(open|closed)\b/,'closed');
+  document.getElementById('desk-lang-chev').style.transform = '';
+}
+const drops = { prof: false, lang: false };
+function toggleDrop(name) {
+  const other = name === 'prof' ? 'lang' : 'prof';
+  drops[other] = false;
+  const oel = document.getElementById(other === 'prof' ? 'prof-drop' : 'lang-drop');
+  if(oel) oel.className = oel.className.replace(/\bopen\b/,'closed');
+  drops[name] = !drops[name];
+  const el = document.getElementById(name === 'prof' ? 'prof-drop' : 'lang-drop');
+  if(el) el.className = el.className.replace(/\b(open|closed)\b/, drops[name] ? 'open' : 'closed');
+  if(name === 'lang') { const chev = document.getElementById('lang-chev'); if(chev) chev.style.transform = drops.lang ? 'rotate(180deg)' : ''; }
+}
+function setLang(code, flag) {
+  ['lang-code','desk-lang-code'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=code; });
+  ['lang-flag','desk-lang-flag'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=flag; });
+  drops.lang = false;
+  const el = document.getElementById('lang-drop'); if(el) el.className = el.className.replace(/\b(open|closed)\b/,'closed');
+  const chev = document.getElementById('lang-chev'); if(chev) chev.style.transform = '';
+}
 
-<script>
+/* ── Outside click ── */
+document.addEventListener('click', e => {
+  const deskProfWrap = document.getElementById('desk-prof-wrap');
+  if(deskProfWrap && !deskProfWrap.contains(e.target) && deskProfOpen) {
+    deskProfOpen = false;
+    const drop = document.getElementById('desk-prof-drop'), chev = document.getElementById('desk-prof-chev');
+    if(drop) drop.className = drop.className.replace(/\b(open|closed)\b/,'closed');
+    if(chev) chev.style.transform = '';
+  }
+  const dlw = document.getElementById('desk-lang-wrap');
+  if(dlw && !dlw.contains(e.target) && deskLangOpen) {
+    deskLangOpen = false;
+    document.getElementById('desk-lang-drop').className = document.getElementById('desk-lang-drop').className.replace(/\b(open|closed)\b/,'closed');
+    document.getElementById('desk-lang-chev').style.transform = '';
+  }
+  const pb = document.getElementById('prof-wrap');
+  if(pb && !pb.contains(e.target) && drops.prof) { drops.prof = false; document.getElementById('prof-drop').className = document.getElementById('prof-drop').className.replace(/\b(open|closed)\b/,'closed'); }
+  const lb = document.getElementById('lang-wrap');
+  if(lb && !lb.contains(e.target) && drops.lang) { drops.lang = false; document.getElementById('lang-drop').className = document.getElementById('lang-drop').className.replace(/\b(open|closed)\b/,'closed'); document.getElementById('lang-chev').style.transform = ''; }
+});
+
+/* ── Recent pages ── */
+const PAGE_META = {
+  'learn.html':        { title:'Learn', sub:'Hiragana & Kanji', emoji:'📖', bg:'rgba(126,184,228,.13)', accent:'#3a7cbf', bar:'#3a7cbf' },
+  'study.html':        { title:'Flashcard Study', sub:'Zen flip cards', emoji:'🃏', bg:'rgba(110,206,200,.13)', accent:'#2a9d8f', bar:'#6ecec8' },
+  'quiz/index.html':         { title:'Quiz Arena', sub:'Gamified questions', emoji:'🎯', bg:'rgba(128,212,168,.13)', accent:'#27ae72', bar:'#80d4a8' },
+  'jlpt/index.html':         { title:'JLPT Course', sub:'N5 → N1 prep', emoji:'📝', bg:'rgba(126,184,228,.13)', accent:'#3a7cbf', bar:'#3a7cbf' },
+  'ssw/index.html':          { title:'SSW Course', sub:'Specified Skilled Worker', emoji:'🏭', bg:'rgba(110,206,200,.13)', accent:'#2a9d8f', bar:'#6ecec8' },
+  'news/index.html':         { title:'Japanese News', sub:'Read & listen daily', emoji:'📰', bg:'rgba(126,184,228,.13)', accent:'#3a7cbf', bar:'#7eb8e4' },
+  'conversation/index.html': { title:'Daily Conversation', sub:'Everyday phrases', emoji:'💬', bg:'rgba(110,206,200,.13)', accent:'#2a9d8f', bar:'#6ecec8' },
+  'jobhunt/index.html':      { title:'Job Hunt', sub:'Japanese job vocab', emoji:'💼', bg:'rgba(245,218,138,.18)', accent:'#d4a017', bar:'#f5da8a' },
+  'community/index.html':    { title:'Community', sub:'Connect with learners', emoji:'🌐', bg:'rgba(196,168,224,.16)', accent:'#8b5cf6', bar:'#c4a8e0' },
+  'kanji/index.html':        { title:'Kanji Writing', sub:'Stroke order practice', emoji:'書', bg:'rgba(244,165,122,.15)', accent:'#e0693a', bar:'#f4a57a' },
+  'other/index.html':        { title:'Other Courses', sub:'BJT · Dictionary · More', emoji:'✨', bg:'rgba(196,168,224,.16)', accent:'#8b5cf6', bar:'#c4a8e0' },
+};
+function timeAgo(ts) {
+  const diff = Date.now()-ts, m=Math.floor(diff/60000), h=Math.floor(diff/3600000), d=Math.floor(diff/86400000);
+  if(m<1) return 'Just now'; if(m<60) return m+'m ago'; if(h<24) return h+'h ago'; return d+'d ago';
+}
+function renderRecent() {
+  const pages = JSON.parse(localStorage.getItem('Sakura_recent')||'[]').slice(0,3);
+  const container = document.getElementById('recent-pages'), empty = document.getElementById('no-history');
+  if(!pages.length){ container.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden'); container.classList.remove('hidden');
+  container.innerHTML = pages.map(p => {
+    const m = PAGE_META[p.url]||{title:p.url.replace('.html',''),sub:'',emoji:'📄',bg:'rgba(126,184,228,.13)',accent:'#3a7cbf',bar:'#3a7cbf'};
+    const icon = m.emoji==='書' ? `<span class="jp font-bold" style="font-size:26px;color:${m.accent};line-height:1;">書</span>` : `<span style="font-size:26px;line-height:1;">${m.emoji}</span>`;
+    return `<a href="${p.url}" class="card-lift rounded-xl3 p-4 flex items-center gap-4 group border" style="background:linear-gradient(135deg,${m.bg},rgba(255,255,255,0));border-color:${m.accent}22;">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${m.bg};">${icon}</div>
+      <div class="min-w-0 flex-1">
+        <div class="font-bold text-sm t-ink leading-tight">${m.title}</div>
+        <div class="text-xs t-muted mt-0.5">${timeAgo(p.ts)} · ${m.sub}</div>
+        <div class="h-1 w-full rounded-full mt-2 overflow-hidden" style="background:${m.accent}18;"><div class="h-full rounded-full" style="width:${p.prog||50}%;background:${m.bar};"></div></div>
+      </div>
+      <svg class="w-4 h-4 t-muted flex-shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+    </a>`;
+  }).join('');
+}
+renderRecent();
+
+/* ── Activity ── */
+window.trackActivity = function(event) {
+  try { const list=JSON.parse(localStorage.getItem('sakura_activity')||'[]'); list.unshift({...event,ts:Date.now()}); localStorage.setItem('sakura_activity',JSON.stringify(list.slice(0,30))); } catch(e){}
+};
+function renderActivity() {
+  const list=document.getElementById('activity-list'), empty=document.getElementById('activity-empty');
+  const acts=JSON.parse(localStorage.getItem('sakura_activity')||'[]').slice(0,10);
+  if(!acts.length){ list.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden'); list.classList.remove('hidden');
+  const ago=ts=>{ const d=Date.now()-ts,m=Math.floor(d/60000),h=Math.floor(d/3600000),dy=Math.floor(d/86400000); if(m<1)return'Just now';if(m<60)return m+'m ago';if(h<24)return h+'h ago';if(dy===1)return'Yesterday';return dy+'d ago'; };
+  list.innerHTML=acts.map(a=>`<div class="flex items-center gap-3 px-4 py-3"><div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-base" style="background:${a.iconBg||'rgba(126,184,228,.15)'}">${a.icon||'📖'}</div><div class="flex-1 min-w-0"><div class="text-sm font-semibold t-ink leading-tight">${a.title}</div><div class="text-xs t-muted mt-0.5">${ago(a.ts)}${a.sub?' · '+a.sub:''}</div></div>${a.xp?`<span class="text-xs font-bold px-2.5 py-0.5 rounded-full flex-shrink-0" style="color:${a.xpColor||'#27ae72'};background:${a.xpBg||'rgba(128,212,168,.12)'}">+${a.xp} XP</span>`:''}</div>`).join('');
+}
+renderActivity();
+
+/* ── Word of the Day ── */
 (function(){
-  var PAGE='jlpt/index.html'; var PROG=65;
-  try {
-    var list = JSON.parse(localStorage.getItem('shikaku_recent') || '[]');
-    list = list.filter(function(x){ return x.url !== PAGE; });
-    list.unshift({ url: PAGE, ts: Date.now(), prog: PROG });
-    if(list.length > 10) list = list.slice(0, 10);
-    localStorage.setItem('shikaku_recent', JSON.stringify(list));
-  } catch(e) {}
+  let words=[], cur=0, slide=0, autoTimer;
+  function todayIdx(len){ const d=new Date(); return (d.getFullYear()*365+d.getMonth()*31+d.getDate())%len; }
+  function goSlide(idx){
+    slide=idx%2;
+    const track=document.getElementById('slide-track');
+    if(track) track.style.transform=slide===0?'translateX(0)':'translateX(-50%)';
+    const d1=document.getElementById('dot1'), d2=document.getElementById('dot2');
+    if(d1) d1.style.background=slide===1?'#3a7cbf':'#e2e8f0';
+    if(d2) d2.style.background=slide===0?'#3a7cbf':'#e2e8f0';
+  }
+  function setWord(idx){
+    if(!words.length) return;
+    cur=(idx+words.length)%words.length;
+    const w=words[cur];
+    document.getElementById('wotd-word').textContent=w.word;
+    document.getElementById('wotd-reading').textContent=w.reading;
+    document.getElementById('wotd-romaji').textContent=w.romaji;
+    document.getElementById('wotd-meaning').textContent=w.meaning;
+    document.getElementById('wotd-example').textContent=w.example;
+    const ex=document.getElementById('wotd-ex-meaning'); if(ex) ex.textContent='— '+w.example_meaning;
+    const num=document.getElementById('wotd-num'); if(num) num.textContent=(cur+1)+' / '+words.length;
+    const dots=document.getElementById('wotd-dots');
+    if(dots){ dots.innerHTML=''; const show=Math.min(words.length,8); for(let i=0;i<show;i++){ const d=document.createElement('div'); d.style.cssText=`width:5px;height:5px;border-radius:50%;background:${i===cur%show?'#3a7cbf':'#e2e8f0'};transition:background .3s;`; dots.appendChild(d); } }
+  }
+  window.nextWotd=function(){ setWord(cur+1); if(slide===0) goSlide(1); };
+  window.prevWotd=function(){ setWord(cur-1); if(slide===0) goSlide(1); };
+  function startAuto(){ clearInterval(autoTimer); autoTimer=setInterval(function(){ goSlide(slide+1); if(slide===1) setWord(cur+1); },5000); }
+  fetch('word-of-day.json').then(r=>r.json()).then(data=>{ words=data; setWord(todayIdx(words.length)); startAuto(); }).catch(()=>{ words=[{word:'頑張る',reading:'がんばる',romaji:'ganbaru',meaning:"Do one's best",example:'毎日頑張っています',example_meaning:'I do my best every day'}]; setWord(0); startAuto(); });
+})();
+
+/* ── Download App banner (once per day) ── */
+(function(){
+  var lastShown=localStorage.getItem('sakura_app_banner_last'),today=new Date().toDateString();
+  if(lastShown!==today){ localStorage.setItem('sakura_app_banner_last',today); setTimeout(function(){ var banner=document.createElement('div'); banner.style.cssText='position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:9999;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;max-width:320px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(15,23,42,.15);cursor:pointer;'; banner.onclick=function(e){ if(!e.target.closest('button')) window.location.href='download/index.html'; }; banner.innerHTML='<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7eb8e4,#3a7cbf);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📲</div><div style="flex:1;min-width:0;font-size:13px;font-weight:600;color:#1f2937;">Download App — Sakura Academy PWA install </div><button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:16px;flex-shrink:0;">✕</button>'; document.body.appendChild(banner); setTimeout(function(){ banner.remove(); },6000); },2000); }
+})();
+
+/* ── Firebase dynamic name/avatar/stats ── */
+(function(){
+  var cachedName=localStorage.getItem('sakura_user_name');
+  if(cachedName){ ['greeting-name','sb-name','mob-drop-name','desk-drop-name'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=cachedName; }); }
+  function applyUser(user){
+    if(!user) return;
+    var name=user.displayName||cachedName||'mate', localPic=localStorage.getItem('sakura-avatar-'+user.uid), photo=localPic||user.photoURL||'';
+    localStorage.setItem('sakura_user_name',name);
+    ['greeting-name','sb-name','mob-drop-name','desk-drop-name'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=name; });
+    ['sb-avatar','mob-avatar'].forEach(function(id){ var el=document.getElementById(id); if(!el) return; if(photo){ el.innerHTML='<img src="'+photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt=""/>'; } else { el.textContent=(name[0]||'S').toUpperCase(); } });
+    var month=(function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); })();
+    firebase.database().ref('engagement/'+user.uid+'/monthly/'+month).once('value').then(function(snap){
+      var d=snap.val()||{}, qs=d.quizStats||{}, quizzes=d.quizzesCompleted||0, acc=qs.accuracyPct||0, words=Math.min(quizzes,20), wordsPct=Math.round(words/20*100), ringPct=Math.round((wordsPct+acc)/2);
+      var offset=226.2-(ringPct/100)*226.2, ringEl=document.getElementById('goal-ring-fill');
+      if(ringEl) setTimeout(function(){ ringEl.style.strokeDashoffset=offset; },200);
+      var pctEl=document.getElementById('goal-ring-pct'); if(pctEl) pctEl.textContent=ringPct+'%';
+      var wBar=document.getElementById('words-bar'), wVal=document.getElementById('words-val');
+      if(wBar) setTimeout(function(){ wBar.style.width=wordsPct+'%'; },200); if(wVal) wVal.textContent=words+'/20';
+      var qBar=document.getElementById('quiz-bar'), qVal=document.getElementById('quiz-val');
+      if(qBar) setTimeout(function(){ qBar.style.width=acc+'%'; },200); if(qVal) qVal.textContent=acc+'%';
+    }).catch(function(){});
+  }
+  function loadScript(src,cb){ var s=document.createElement('script'); s.src=src; s.onload=cb; document.head.appendChild(s); }
+  function initFirebase(){
+    if(!firebase.apps.length){ firebase.initializeApp({apiKey:"AIzaSyB-5EgDmpPYpdYoRpX9pXst5fPr2ICOai4",authDomain:"learnwith-sakura.firebaseapp.com",databaseURL:"https://learnwith-sakura-default-rtdb.firebaseio.com",projectId:"learnwith-sakura",storageBucket:"learnwith-sakura.firebasestorage.app",messagingSenderId:"524809202868",appId:"1:524809202868:web:8d4f47a122d542e285bbe1"}); }
+    firebase.auth().onAuthStateChanged(applyUser);
+  }
+  loadScript('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js',function(){ loadScript('https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js',function(){ loadScript('https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js',initFirebase); }); });
 })();
 </script>
 
-  <script>
-    if('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .catch(e => console.log('SW error:', e));
-      });
-    }
-  </script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js', { scope: '/' })
+      .then(reg => {
+        // Check for SW update every 60s
+        setInterval(() => reg.update(), 60000);
+        reg.addEventListener('updatefound', () => {
+          const newSW = reg.installing;
+          newSW.addEventListener('statechange', () => {
+            if(newSW.state === 'installed' && navigator.serviceWorker.controller){
+              // New version available — silent update
+              newSW.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        });
+      })
+      .catch(() => {});
+    // Reload when new SW takes over
+    navigator.serviceWorker.addEventListener('controllerchange', () => location.reload());
+  });
+}
+</script>
 </body>
 </html>
